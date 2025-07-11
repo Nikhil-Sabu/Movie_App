@@ -1,37 +1,33 @@
 .success-modal-content {
-    background: var(--card-background);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    padding: 3rem 2rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  
-  .success-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--primary-red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-  }
-  
-  .success-title {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin: 0;
-  }
-  
-  .success-message {
-    color: var(--light-gray);
-    font-size: 1rem;
-    margin: 0;
-    line-height: 1.5;
-  }
+  background: var(--card-background);
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--white);
+}
+
+.success-title {
+  color: var(--white);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.success-message {
+  color: var(--light-gray);
+  font-size: 1rem;
+  line-height: 1.5;
+}

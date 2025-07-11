@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Calendar, ChevronDown } from 'lucide-react';
+import { XIcon, CalendarIcon, ChevronDownIcon } from '../Icons/Icons';
 import './AddMovieModal.css';
 
 const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }) => {
@@ -20,16 +20,18 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
 
   useEffect(() => {
     if (movie && mode === 'edit') {
+      console.log('Editing movie:', movie);
       setFormData({
         title: movie.title || '',
         releaseDate: movie.releaseDate || '',
         movieUrl: movie.url || '',
-        rating: movie.rating || '',
+        rating: movie.rating?.toString() || '',
         genre: movie.genre || '',
         runtime: movie.runtime || '',
         overview: movie.overview || ''
       });
-    } else {
+    } else if (mode === 'add') {
+      // Reset form for new movie
       setFormData({
         title: '',
         releaseDate: '',
@@ -40,6 +42,7 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
         overview: ''
       });
     }
+    setErrors({});
   }, [movie, mode, isOpen]);
 
   const handleInputChange = (field, value) => {
@@ -48,7 +51,6 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
       [field]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({
         ...prev,
@@ -68,12 +70,19 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
     if (!formData.runtime.trim()) newErrors.runtime = 'Runtime is required';
     if (!formData.overview.trim()) newErrors.overview = 'Overview is required';
 
+    // Validate rating range
+    const rating = parseFloat(formData.rating);
+    if (formData.rating && (isNaN(rating) || rating < 0 || rating > 10)) {
+      newErrors.rating = 'Rating must be between 0 and 10';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Form submitted:', formData);
     if (validateForm()) {
       onSubmit(formData);
     }
@@ -92,15 +101,20 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
     setErrors({});
   };
 
+  const handleClose = () => {
+    setShowGenreDropdown(false);
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="modal-overlay" onClick={handleClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>{mode === 'edit' ? 'EDIT MOVIE' : 'ADD MOVIE'}</h2>
-          <button className="close-btn" onClick={onClose}>
-            <X size={24} />
+          <button className="close-btn" onClick={handleClose}>
+            <XIcon size={24} />
           </button>
         </div>
 
@@ -127,7 +141,7 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
                   onChange={(e) => handleInputChange('releaseDate', e.target.value)}
                   className={`form-input date-input ${errors.releaseDate ? 'error' : ''}`}
                 />
-                <Calendar className="date-icon" size={20} />
+                <CalendarIcon className="date-icon" size={20} />
               </div>
               {errors.releaseDate && <span className="error-message">{errors.releaseDate}</span>}
             </div>
@@ -172,7 +186,7 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
                   onClick={() => setShowGenreDropdown(!showGenreDropdown)}
                 >
                   {formData.genre || 'Select Genre'}
-                  <ChevronDown size={20} />
+                  <ChevronDownIcon size={20} />
                 </button>
                 {showGenreDropdown && (
                   <div className="dropdown-menu">
@@ -206,7 +220,7 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
                 value={formData.runtime}
                 onChange={(e) => handleInputChange('runtime', e.target.value)}
                 className={`form-input ${errors.runtime ? 'error' : ''}`}
-                placeholder="minutes"
+                placeholder="2h 30min"
               />
               {errors.runtime && <span className="error-message">{errors.runtime}</span>}
             </div>
@@ -229,7 +243,7 @@ const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }
               RESET
             </button>
             <button type="submit" className="submit-btn">
-              SUBMIT
+              {mode === 'edit' ? 'UPDATE' : 'SUBMIT'}
             </button>
           </div>
         </form>

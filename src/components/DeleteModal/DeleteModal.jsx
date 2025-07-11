@@ -1,15 +1,15 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { XIcon } from '../Icons/Icons';
 import './DeleteModal.css';
 
 const DeleteModal = ({ isOpen, onClose, onConfirm, movieTitle }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="delete-modal-content">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="delete-modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>
-          <X size={24} />
+          <XIcon size={24} />
         </button>
         
         <div className="delete-modal-body">

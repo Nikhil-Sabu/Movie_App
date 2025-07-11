@@ -1,31 +1,39 @@
 .context-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--card-background);
-    border: 1px solid var(--dark-gray);
-    border-radius: 4px;
-    min-width: 100px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 1000;
-  }
-  
-  .context-menu-item {
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: none;
-    border: none;
-    color: var(--white);
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .context-menu-item:hover {
-    background: var(--dark-gray);
-  }
-  
-  .context-menu-item.delete:hover {
-    background: var(--primary-red);
-  }
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--card-background);
+  border: 1px solid var(--dark-gray);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.context-menu-item:hover {
+  background: var(--primary-red);
+}
+
+.context-menu-item:not(:last-child) {
+  border-bottom: 1px solid var(--dark-gray);
+}
+
+.context-menu-item svg {
+  flex-shrink: 0;
+}

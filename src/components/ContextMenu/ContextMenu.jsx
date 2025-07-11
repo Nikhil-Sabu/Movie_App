@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { EditIcon, TrashIcon } from '../Icons/Icons';
 import './ContextMenu.css';
 
 const ContextMenu = ({ onEdit, onDelete, onClose }) => {
@@ -11,16 +12,41 @@ const ContextMenu = ({ onEdit, onDelete, onClose }) => {
       }
     };
 
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
   }, [onClose]);
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onEdit();
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDelete();
+  };
 
   return (
     <div className="context-menu" ref={menuRef}>
-      <button className="context-menu-item" onClick={onEdit}>
+      <button className="context-menu-item" onClick={handleEdit}>
+        <EditIcon size={16} />
         Edit
       </button>
-      <button className="context-menu-item delete" onClick={onDelete}>
+      <button className="context-menu-item" onClick={handleDelete}>
+        <TrashIcon size={16} />
         Delete
       </button>
     </div>

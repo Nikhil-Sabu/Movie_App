@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Check } from 'lucide-react';
+import { CheckIcon } from '../Icons/Icons';
 import './SuccessModal.css';
 
 const SuccessModal = ({ isOpen, onClose, message = "The movie has been added to database successfully" }) => {
@@ -19,7 +19,7 @@ const SuccessModal = ({ isOpen, onClose, message = "The movie has been added to 
     <div className="modal-overlay">
       <div className="success-modal-content">
         <div className="success-icon">
-          <Check size={32} />
+          <CheckIcon size={32} />
         </div>
         <h2 className="success-title">CONGRATULATIONS!</h2>
         <p className="success-message">{message}</p>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { XIcon } from '../Icons/Icons';
 import './MovieDetail.css';
 
 const MovieDetail = ({ movie, isOpen, onClose }) => {
@@ -9,7 +9,7 @@ const MovieDetail = ({ movie, isOpen, onClose }) => {
     <div className="movie-detail-overlay" onClick={onClose}>
       <div className="movie-detail-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>
-          <X size={24} />
+          <XIcon size={24} />
         </button>
         
         <div className="movie-detail-header">

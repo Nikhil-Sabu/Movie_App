@@ -6,8 +6,8 @@ const Header = ({ onAddMovie }) => {
     <header className="header">
       <div className="header-content">
         <div className="logo">
-          <span className="netflix">netflix</span>
-          <span className="roulette">roulette</span>
+          <span className="nix">Nix</span>
+          <span className="mov">Movies</span>
         </div>
         <button className="add-movie-btn" onClick={onAddMovie}>
           + ADD MOVIE

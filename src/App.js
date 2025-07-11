@@ -179,11 +179,6 @@ function App() {
         onSelect={handleMovieSelect}
       />
 
-      {/* Add Movie Button - Fixed Position */}
-      <button className="floating-add-btn" onClick={handleAddMovie}>
-        + ADD MOVIE
-      </button>
-
       {/* Modals */}
       <AddMovieModal
         isOpen={showAddModal}
@@ -215,8 +210,8 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
-          <span className="netflix">netflix</span>
-          <span className="roulette">roulette</span>
+          <span className="nix">Nix</span>
+          <span className="mov">Movies</span>
         </div>
       </footer>
     </div>

@@ -1,0 +1,241 @@
+import React, { useState, useEffect } from 'react';
+import { X, Calendar, ChevronDown } from 'lucide-react';
+import './AddMovieModal.css';
+
+const AddMovieModal = ({ isOpen, onClose, onSubmit, movie = null, mode = 'add' }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    releaseDate: '',
+    movieUrl: '',
+    rating: '',
+    genre: '',
+    runtime: '',
+    overview: ''
+  });
+  
+  const [showGenreDropdown, setShowGenreDropdown] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const genres = ['Crime', 'Documentary', 'Horror', 'Comedy', 'Action', 'Drama'];
+
+  useEffect(() => {
+    if (movie && mode === 'edit') {
+      setFormData({
+        title: movie.title || '',
+        releaseDate: movie.releaseDate || '',
+        movieUrl: movie.url || '',
+        rating: movie.rating || '',
+        genre: movie.genre || '',
+        runtime: movie.runtime || '',
+        overview: movie.overview || ''
+      });
+    } else {
+      setFormData({
+        title: '',
+        releaseDate: '',
+        movieUrl: '',
+        rating: '',
+        genre: '',
+        runtime: '',
+        overview: ''
+      });
+    }
+  }, [movie, mode, isOpen]);
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.releaseDate) newErrors.releaseDate = 'Release date is required';
+    if (!formData.movieUrl.trim()) newErrors.movieUrl = 'Movie URL is required';
+    if (!formData.rating) newErrors.rating = 'Rating is required';
+    if (!formData.genre) newErrors.genre = 'Please select at least one genre';
+    if (!formData.runtime.trim()) newErrors.runtime = 'Runtime is required';
+    if (!formData.overview.trim()) newErrors.overview = 'Overview is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      onSubmit(formData);
+    }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      title: '',
+      releaseDate: '',
+      movieUrl: '',
+      rating: '',
+      genre: '',
+      runtime: '',
+      overview: ''
+    });
+    setErrors({});
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>{mode === 'edit' ? 'EDIT MOVIE' : 'ADD MOVIE'}</h2>
+          <button className="close-btn" onClick={onClose}>
+            <X size={24} />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="movie-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">TITLE</label>
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => handleInputChange('title', e.target.value)}
+                className={`form-input ${errors.title ? 'error' : ''}`}
+                placeholder="Movie title"
+              />
+              {errors.title && <span className="error-message">{errors.title}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">RELEASE DATE</label>
+              <div className="date-input-wrapper">
+                <input
+                  type="date"
+                  value={formData.releaseDate}
+                  onChange={(e) => handleInputChange('releaseDate', e.target.value)}
+                  className={`form-input date-input ${errors.releaseDate ? 'error' : ''}`}
+                />
+                <Calendar className="date-icon" size={20} />
+              </div>
+              {errors.releaseDate && <span className="error-message">{errors.releaseDate}</span>}
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">MOVIE URL</label>
+              <input
+                type="url"
+                value={formData.movieUrl}
+                onChange={(e) => handleInputChange('movieUrl', e.target.value)}
+                className={`form-input ${errors.movieUrl ? 'error' : ''}`}
+                placeholder="https://"
+              />
+              {errors.movieUrl && <span className="error-message">{errors.movieUrl}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">RATING</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                max="10"
+                value={formData.rating}
+                onChange={(e) => handleInputChange('rating', e.target.value)}
+                className={`form-input ${errors.rating ? 'error' : ''}`}
+                placeholder="7.8"
+              />
+              {errors.rating && <span className="error-message">{errors.rating}</span>}
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">GENRE</label>
+              <div className="dropdown-wrapper">
+                <button
+                  type="button"
+                  className={`dropdown-btn ${errors.genre ? 'error' : ''}`}
+                  onClick={() => setShowGenreDropdown(!showGenreDropdown)}
+                >
+                  {formData.genre || 'Select Genre'}
+                  <ChevronDown size={20} />
+                </button>
+                {showGenreDropdown && (
+                  <div className="dropdown-menu">
+                    {genres.map(genre => (
+                      <label key={genre} className="dropdown-item">
+                        <input
+                          type="checkbox"
+                          checked={formData.genre.includes(genre)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              handleInputChange('genre', formData.genre ? `${formData.genre}, ${genre}` : genre);
+                            } else {
+                              const newGenres = formData.genre.split(', ').filter(g => g !== genre);
+                              handleInputChange('genre', newGenres.join(', '));
+                            }
+                          }}
+                        />
+                        {genre}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {errors.genre && <span className="error-message">{errors.genre}</span>}
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">RUNTIME</label>
+              <input
+                type="text"
+                value={formData.runtime}
+                onChange={(e) => handleInputChange('runtime', e.target.value)}
+                className={`form-input ${errors.runtime ? 'error' : ''}`}
+                placeholder="minutes"
+              />
+              {errors.runtime && <span className="error-message">{errors.runtime}</span>}
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">OVERVIEW</label>
+            <textarea
+              value={formData.overview}
+              onChange={(e) => handleInputChange('overview', e.target.value)}
+              className={`form-textarea ${errors.overview ? 'error' : ''}`}
+              placeholder="Movie description"
+              rows={4}
+            />
+            {errors.overview && <span className="error-message">{errors.overview}</span>}
+          </div>
+
+          <div className="form-actions">
+            <button type="button" onClick={handleReset} className="reset-btn">
+              RESET
+            </button>
+            <button type="submit" className="submit-btn">
+              SUBMIT
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default AddMovieModal;

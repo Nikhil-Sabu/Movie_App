@@ -1,38 +1,77 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+.floating-add-btn {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: transparent;
+  border: 2px solid var(--light-gray);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 100;
+  border-radius: 4px;
+  display: none; /* Hide on mobile, show header button instead */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.floating-add-btn:hover {
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+  background: rgba(246, 82, 97, 0.1);
+}
+
+.footer {
+  background: var(--darker-gray);
+  padding: 2rem;
+  margin-top: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-content {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.footer .netflix {
+  color: var(--primary-red);
+}
+
+.footer .roulette {
+  color: var(--white);
+}
+
+@media (min-width: 769px) {
+  .floating-add-btn {
+    display: block;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem;
+  }
+  
+  .footer-content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem;
+  }
+  
+  .footer-content {
+    font-size: 0.9rem;
   }
 }

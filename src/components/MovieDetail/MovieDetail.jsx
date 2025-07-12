@@ -1,40 +1,59 @@
 import React from 'react';
-import { XIcon } from '../Icons/Icons';
+import Dialog from '../Dialog/Dialog';
 import './MovieDetail.css';
 
-const MovieDetail = ({ movie, isOpen, onClose }) => {
-  if (!isOpen || !movie) return null;
+const MovieDetail = ({ isOpen, movie, onClose, onEdit, onDelete }) => {
+  if (!movie) return null;
 
   return (
-    <div className="movie-detail-overlay" onClick={onClose}>
-      <div className="movie-detail-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>
-          <XIcon size={24} />
-        </button>
+    <Dialog
+      isOpen={isOpen}
+      onClose={onClose}
+      size="large"
+      showCloseButton={true}
+    >
+      <div className="movie-detail-content">
+        <div className="movie-detail-poster">
+          <img src={movie.poster} alt={movie.title} />
+        </div>
         
-        <div className="movie-detail-header">
-          <div className="movie-poster-large">
-            <img src={movie.poster} alt={movie.title} />
+        <div className="movie-detail-info">
+          <h1 className="movie-detail-title">{movie.title}</h1>
+          
+          <div className="movie-detail-meta">
+            <span className="movie-year">{movie.year}</span>
+            <span className="movie-rating">⭐ {movie.rating}</span>
+            <span className="movie-runtime">{movie.runtime}</span>
           </div>
           
-          <div className="movie-info-large">
-            <div className="title-rating">
-              <h1 className="movie-title-large">{movie.title}</h1>
-              <span className="rating-badge">{movie.rating}</span>
-            </div>
-            
-            <p className="movie-genre-large">{movie.genre}</p>
-            
-            <div className="movie-meta">
-              <span className="movie-year-large">{movie.year}</span>
-              <span className="movie-runtime-large">{movie.runtime}</span>
-            </div>
-            
-            <p className="movie-overview-large">{movie.overview}</p>
+          <div className="movie-genre">
+            <strong>Genre:</strong> {movie.genre}
+          </div>
+          
+          <div className="movie-overview">
+            <h3>Overview</h3>
+            <p>{movie.overview}</p>
+          </div>
+          
+          <div className="movie-actions">
+            <button onClick={() => onEdit(movie)} className="btn-edit">
+              EDIT
+            </button>
+            <button onClick={() => onDelete(movie.id)} className="btn-delete">
+              DELETE
+            </button>
+            <a 
+              href={movie.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="btn-watch"
+            >
+              WATCH
+            </a>
           </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 };
 

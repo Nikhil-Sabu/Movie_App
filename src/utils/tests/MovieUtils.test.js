@@ -8,7 +8,7 @@ import {
     formatMovieForSubmission 
   } from '../movieUtils';
   
-  // Test data
+  
   const mockMovies = [
     {
       id: 1,
@@ -18,8 +18,8 @@ import {
       rating: 8.5,
       runtime: "2h 30min",
       overview: "An exciting action movie",
-      poster: "https://example.com/poster1.jpg",
-      url: "https://example.com/movie1",
+      poster: "https:
+      url: "https:
       releaseDate: "2023-01-01"
     },
     {
@@ -30,8 +30,8 @@ import {
       rating: 7.2,
       runtime: "1h 45min",
       overview: "A funny comedy movie",
-      poster: "https://example.com/poster2.jpg",
-      url: "https://example.com/movie2",
+      poster: "https:
+      url: "https:
       releaseDate: "2022-06-15"
     },
     {
@@ -42,8 +42,8 @@ import {
       rating: 9.1,
       runtime: "2h 15min",
       overview: "A compelling drama",
-      poster: "https://example.com/poster3.jpg",
-      url: "https://example.com/movie3",
+      poster: "https:
+      url: "https:
       releaseDate: "2024-03-20"
     }
   ];
@@ -163,7 +163,7 @@ import {
       const validMovieData = {
         title: 'Test Movie',
         releaseDate: '2023-01-01',
-        movieUrl: 'https://example.com',
+        movieUrl: 'https:
         rating: '8.5',
         genre: 'Action',
         runtime: '2h 30min',
@@ -215,7 +215,7 @@ import {
         const formData = {
           title: '  Test Movie  ',
           releaseDate: '2023-01-01',
-          movieUrl: '  https://example.com  ',
+          movieUrl: '  https:
           rating: '8.5',
           genre: 'Action',
           runtime: '  2h 30min  ',
@@ -231,8 +231,8 @@ import {
           rating: 8.5,
           runtime: '2h 30min',
           overview: 'A great movie',
-          poster: 'https://example.com',
-          url: 'https://example.com',
+          poster: 'https:
+          url: 'https:
           releaseDate: '2023-01-01'
         });
       });

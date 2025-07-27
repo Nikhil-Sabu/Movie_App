@@ -1,4 +1,4 @@
-// Utility functions for movie operations
+
 export const filterMoviesByGenre = (movies, genre) => {
     if (genre === 'ALL') return movies;
     
@@ -6,7 +6,7 @@ export const filterMoviesByGenre = (movies, genre) => {
       const movieGenre = movie.genre.toLowerCase();
       const filterGenre = genre.toLowerCase();
       
-      // Handle special cases
+      
       if (genre === 'ACTION') {
         return movieGenre.includes('action') || movieGenre.includes('adventure');
       }

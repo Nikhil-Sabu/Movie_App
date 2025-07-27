@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddMovieModal from '../AddMovieModal';
 
-// Mock the Dialog component for testing
+
 jest.mock('../../Dialog/Dialog', () => {
   return function MockDialog({ isOpen, title, children, onClose }) {
     if (!isOpen) return null;
@@ -55,7 +55,7 @@ describe('AddMovieModal Component', () => {
     const mockMovie = {
       title: 'Test Movie',
       releaseDate: '2023-01-01',
-      movieUrl: 'https://example.com', // Fixed: changed from 'url' to 'movieUrl'
+      movieUrl: 'https:
       rating: 8.5,
       genre: 'Action',
       runtime: 150,
@@ -75,7 +75,7 @@ describe('AddMovieModal Component', () => {
     expect(screen.getByText('EDIT MOVIE')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Test Movie')).toBeInTheDocument();
     expect(screen.getByDisplayValue('2023-01-01')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('https://example.com')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('https:
     expect(screen.getByDisplayValue('8.5')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Action')).toBeInTheDocument();
     expect(screen.getByDisplayValue('150')).toBeInTheDocument();
@@ -119,10 +119,10 @@ describe('AddMovieModal Component', () => {
       />
     );
 
-    // Fill out the form
+    
     await user.type(screen.getByLabelText('TITLE'), 'New Movie');
     await user.type(screen.getByLabelText('RELEASE DATE'), '2023-12-01');
-    await user.type(screen.getByLabelText('MOVIE URL'), 'https://example.com/movie');
+    await user.type(screen.getByLabelText('MOVIE URL'), 'https:
     await user.type(screen.getByLabelText('RATING'), '9');
     await user.selectOptions(screen.getByLabelText('GENRE'), 'Action');
     await user.type(screen.getByLabelText('RUNTIME'), '135');
@@ -135,7 +135,7 @@ describe('AddMovieModal Component', () => {
       expect(mockOnSubmit).toHaveBeenCalledWith({
         title: 'New Movie',
         releaseDate: '2023-12-01',
-        movieUrl: 'https://example.com/movie',
+        movieUrl: 'https:
         rating: '9',
         genre: 'Action',
         runtime: '135',
@@ -143,7 +143,7 @@ describe('AddMovieModal Component', () => {
       });
     });
 
-    // Removed: expect(mockOnClose).toHaveBeenCalled();
+    
   });
 
   test('closes modal when close button is clicked', async () => {
@@ -187,7 +187,7 @@ describe('AddMovieModal Component', () => {
       />
     );
 
-    // Submit empty form to trigger errors
+    
     const submitButton = screen.getByText('SUBMIT');
     await user.click(submitButton);
 
@@ -195,11 +195,11 @@ describe('AddMovieModal Component', () => {
       expect(screen.getByText('Title is required')).toBeInTheDocument();
     });
 
-    // Start typing in title field
+    
     const titleInput = screen.getByLabelText('TITLE');
     await user.type(titleInput, 'T');
 
-    // Error should be cleared
+    
     expect(screen.queryByText('Title is required')).not.toBeInTheDocument();
   });
 });

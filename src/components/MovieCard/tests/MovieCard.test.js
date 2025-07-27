@@ -59,7 +59,7 @@ describe('MovieCard Component', () => {
       />
     );
     
-    // Hover to show overlay
+    
     const movieCard = screen.getByText('Test Movie').closest('.movie-card');
     await user.hover(movieCard);
     

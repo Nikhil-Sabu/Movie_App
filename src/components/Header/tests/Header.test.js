@@ -12,11 +12,11 @@ describe('Header Component', () => {
   test('renders header with logo', () => {
     const { container } = render(<Header onAddMovie={mockOnAddMovie} />);
     
-    // Test the header specifically
+    
     const header = container.querySelector('header');
     expect(header).toBeInTheDocument();
     
-    // Test logo elements within header
+    
     expect(screen.getByText('Nix')).toBeInTheDocument();
     expect(screen.getByText('Movies')).toBeInTheDocument();
   });

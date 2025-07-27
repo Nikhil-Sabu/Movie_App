@@ -13,31 +13,31 @@ import './styles/globals.css';
 import './App.css';
 
 function App() {
-  // State management
+  
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState('ALL');
   const [sortBy, setSortBy] = useState('release_date');
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Modal states
+  
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showMovieDetail, setShowMovieDetail] = useState(false);
   
-  // Selected items
+  
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [editingMovie, setEditingMovie] = useState(null);
   
   const [successMessage, setSuccessMessage] = useState('');
   
-  // Loading and error states
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch movies from API
+  
   const fetchMovies = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -46,7 +46,7 @@ function App() {
       const response = await movieService.getAllMovies();
       console.log('API Response:', response);
       
-      // Handle the nested data structure
+      
       let movieData = [];
       if (response.data && Array.isArray(response.data)) {
         movieData = response.data;
@@ -62,7 +62,7 @@ function App() {
       applyFiltersAndSort(movieData, searchTerm, selectedGenre, sortBy);
       
     } catch (err) {
-      const errorMessage = err.message || 'Failed to fetch movies. Please make sure the backend server is running on http://localhost:4000';
+      const errorMessage = err.message || 'Failed to fetch movies. Please make sure the backend server is running on http:
       setError(errorMessage);
       console.log('Error fetching movies:', err);
     } finally {
@@ -70,11 +70,11 @@ function App() {
     }
   }, [searchTerm, selectedGenre, sortBy]);
 
-  // Apply client-side filtering and sorting
+  
   const applyFiltersAndSort = useCallback((movieList, search, genre, sort) => {
     let filtered = [...movieList];
 
-    // Apply search filter
+    
     if (search && search.trim()) {
       const searchLower = search.toLowerCase();
       filtered = filtered.filter(movie =>
@@ -84,7 +84,7 @@ function App() {
       );
     }
 
-    // Apply genre filter
+    
     if (genre !== 'ALL') {
       const genreLower = genre.toLowerCase();
       filtered = filtered.filter(movie => {
@@ -97,7 +97,7 @@ function App() {
       });
     }
 
-    // Apply sorting
+    
     filtered.sort((a, b) => {
       switch (sort) {
         case 'title':
@@ -115,17 +115,17 @@ function App() {
     setFilteredMovies(filtered);
   }, []);
 
-  // Fetch movies on component mount
+  
   useEffect(() => {
     fetchMovies();
   }, [fetchMovies]);
 
-  // Apply filters when search, genre, or sort changes
+  
   useEffect(() => {
     applyFiltersAndSort(movies, searchTerm, selectedGenre, sortBy);
   }, [movies, searchTerm, selectedGenre, sortBy, applyFiltersAndSort]);
 
-  // Handle search
+  
   const handleSearch = (term) => {
     setSearchTerm(term);
     if (term && term.trim()) {
@@ -133,7 +133,7 @@ function App() {
     }
   };
 
-  // Handle genre change
+  
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
     if (genre !== 'ALL') {
@@ -141,40 +141,40 @@ function App() {
     }
   };
 
-  // Handle sort change
+  
   const handleSortChange = (sort) => {
     setSortBy(sort);
   };
 
-  // Handle add movie
+  
   const handleAddMovie = () => {
     setEditingMovie(null);
     setShowAddModal(true);
   };
 
-  // Handle edit movie
+  
   const handleEditMovie = (movie) => {
     console.log('Editing movie:', movie);
     setEditingMovie(movie);
     setShowAddModal(true);
-    setShowMovieDetail(false); // Close detail view when editing
+    setShowMovieDetail(false); 
   };
 
-  // Handle delete movie
+  
   const handleDeleteMovie = (movie) => {
     console.log('Deleting movie:', movie);
     setMovieToDelete(movie);
     setShowDeleteModal(true);
-    setShowMovieDetail(false); // Close detail view when deleting
+    setShowMovieDetail(false); 
   };
 
-  // Handle movie select - Show movie detail above grid
+  
   const handleMovieSelect = async (movie) => {
     try {
       setIsLoading(true);
       console.log('Selected movie for details:', movie);
       
-      // Fetch full movie details
+      
       const fullMovie = await movieService.getMovieById(movie.id);
       console.log('Full movie details from API:', fullMovie);
       
@@ -182,7 +182,7 @@ function App() {
       setShowMovieDetail(true);
     } catch (err) {
       console.error('Error fetching movie details:', err);
-      // Fallback to the movie data we already have
+      
       console.log('Using fallback movie data:', movie);
       setSelectedMovie(movie);
       setShowMovieDetail(true);
@@ -191,13 +191,13 @@ function App() {
     }
   };
 
-  // Handle close movie detail
+  
   const handleCloseMovieDetail = () => {
     setShowMovieDetail(false);
     setSelectedMovie(null);
   };
 
-  // Handle movie form submission
+  
   const handleMovieSubmit = async (formData) => {
     try {
       setIsLoading(true);
@@ -205,7 +205,7 @@ function App() {
       
       console.log('Form data received:', formData);
       
-      // Parse runtime as integer
+      
       const runtimeValue = parseInt(formData.runtime) || 0;
       
       const movieData = {
@@ -219,7 +219,7 @@ function App() {
       };
 
       if (editingMovie) {
-        // Update existing movie - include ID in the data
+        
         const updateData = {
           ...movieData,
           id: editingMovie.id
@@ -229,13 +229,13 @@ function App() {
         await movieService.updateMovie(updateData);
         setSuccessMessage('The movie has been updated successfully');
       } else {
-        // Create new movie
+        
         console.log('Creating movie with data:', movieData);
         await movieService.createMovie(movieData);
         setSuccessMessage('The movie has been added to database successfully');
       }
       
-      // Refresh movie list
+      
       await fetchMovies();
       
       setShowAddModal(false);
@@ -251,7 +251,7 @@ function App() {
     }
   };
 
-  // Handle delete confirmation
+  
   const handleDeleteConfirm = async () => {
     if (!movieToDelete) {
       console.error('No movie selected for deletion');
@@ -265,7 +265,7 @@ function App() {
       console.log('Deleting movie with ID:', movieToDelete.id);
       await movieService.deleteMovie(movieToDelete.id);
       
-      // Refresh movie list
+      
       await fetchMovies();
       
       setSuccessMessage('The movie has been deleted successfully');
@@ -282,28 +282,28 @@ function App() {
     }
   };
 
-  // Handle retry on error
+  
   const handleRetry = () => {
     setError(null);
     fetchMovies();
   };
 
-  // Close error message
+  
   const handleCloseError = () => {
     setError(null);
   };
 
-  // Handle modal close functions
+  
   const handleCloseAddModal = () => {
     setShowAddModal(false);
     setEditingMovie(null);
-    setError(null); // Clear any form errors
+    setError(null); 
   };
 
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
     setMovieToDelete(null);
-    setError(null); // Clear any delete errors
+    setError(null); 
   };
 
   const handleCloseSuccessModal = () => {
@@ -311,7 +311,7 @@ function App() {
     setSuccessMessage('');
   };
 
-  // Show error message if there's a critical error
+  
   if (error && !showAddModal && !showDeleteModal) {
     return (
       <div className="App">
@@ -334,7 +334,7 @@ function App() {
         onSearchClick={handleCloseMovieDetail}
       />
       
-      {/* Conditional rendering: Either Search Section OR Movie Detail */}
+      {}
       {showMovieDetail ? (
         <MovieDetail
           movie={selectedMovie}
@@ -355,7 +355,7 @@ function App() {
         />
       )}
       
-      {/* Movie Grid - ALWAYS show, remove the conditional */}
+      {}
       <MovieGrid
         movies={filteredMovies}
         selectedGenre={selectedGenre}
@@ -367,7 +367,7 @@ function App() {
         onSelect={handleMovieSelect}
       />
   
-      {/* All your modals remain the same */}
+      {}
       {showAddModal && (
         <AddMovieModal
           isOpen={showAddModal}

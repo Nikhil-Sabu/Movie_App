@@ -18,8 +18,8 @@ import {
       rating: 8.5,
       runtime: "2h 30min",
       overview: "An exciting action movie",
-      poster: "https:
-      url: "https:
+      poster: 'https://example.com/movie',
+      url: 'https://example.com/movie',
       releaseDate: "2023-01-01"
     },
     {
@@ -30,8 +30,8 @@ import {
       rating: 7.2,
       runtime: "1h 45min",
       overview: "A funny comedy movie",
-      poster: "https:
-      url: "https:
+      poster: 'https://example.com/movie/poster',
+      url: 'https://example.com/movie',
       releaseDate: "2022-06-15"
     },
     {
@@ -42,8 +42,8 @@ import {
       rating: 9.1,
       runtime: "2h 15min",
       overview: "A compelling drama",
-      poster: "https:
-      url: "https:
+      poster: 'https://example.com/movie/poster',
+      url: 'https://example.com/movie',
       releaseDate: "2024-03-20"
     }
   ];
@@ -163,7 +163,7 @@ import {
       const validMovieData = {
         title: 'Test Movie',
         releaseDate: '2023-01-01',
-        movieUrl: 'https:
+        movieUrl: 'https://example.com/movie',
         rating: '8.5',
         genre: 'Action',
         runtime: '2h 30min',
@@ -215,7 +215,7 @@ import {
         const formData = {
           title: '  Test Movie  ',
           releaseDate: '2023-01-01',
-          movieUrl: '  https:
+          movieUrl: 'https://example.com/movie',
           rating: '8.5',
           genre: 'Action',
           runtime: '  2h 30min  ',
@@ -231,8 +231,8 @@ import {
           rating: 8.5,
           runtime: '2h 30min',
           overview: 'A great movie',
-          poster: 'https:
-          url: 'https:
+          poster: 'https://example.com/movie/poster',
+          url: 'https://example.com/movie',
           releaseDate: '2023-01-01'
         });
       });

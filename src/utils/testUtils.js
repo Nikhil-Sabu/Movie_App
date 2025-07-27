@@ -10,8 +10,8 @@ export const mockMovie = {
   rating: 8.5,
   runtime: "2h 30min",
   overview: "This is a test movie overview",
-  poster: "https:
-  url: "https:
+  poster: "https://example.com/movie/poster",
+  url: "https://example.com/movie",
   releaseDate: "2023-01-01"
 };
 
@@ -25,8 +25,8 @@ export const mockMovies = [
     rating: 7.2,
     runtime: "1h 45min",
     overview: "A funny movie",
-    poster: "https:
-    url: "https:
+    poster: "https://example.com/movie/poster",
+    url: "https://example.com/movie",
     releaseDate: "2022-06-15"
   }
 ];

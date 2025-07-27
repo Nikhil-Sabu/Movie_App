@@ -62,7 +62,7 @@ function App() {
       applyFiltersAndSort(movieData, searchTerm, selectedGenre, sortBy);
       
     } catch (err) {
-      const errorMessage = err.message || 'Failed to fetch movies. Please make sure the backend server is running on http:
+      const errorMessage = err.message || 'Failed to fetch movies. Please make sure the backend server is running on http://localhost:4000';
       setError(errorMessage);
       console.log('Error fetching movies:', err);
     } finally {

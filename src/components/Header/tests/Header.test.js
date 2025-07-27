@@ -24,14 +24,14 @@ describe('Header Component', () => {
   test('renders add movie button', () => {
     render(<Header onAddMovie={mockOnAddMovie} />);
     
-    const addButton = screen.getByText('+ ADD MOVIE');
+    const addButton = screen.getByText('ADD MOVIE');
     expect(addButton).toBeInTheDocument();
   });
 
   test('calls onAddMovie when add button is clicked', () => {
     render(<Header onAddMovie={mockOnAddMovie} />);
     
-    const addButton = screen.getByText('+ ADD MOVIE');
+    const addButton = screen.getByText('ADD MOVIE');
     fireEvent.click(addButton);
     
     expect(mockOnAddMovie).toHaveBeenCalledTimes(1);

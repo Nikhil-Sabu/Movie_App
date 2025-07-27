@@ -10,7 +10,7 @@ const Header = ({ onAddMovie }) => {
           <span className="mov">Movies</span>
         </div>
         <button className="add-movie-btn" onClick={onAddMovie}>
-          + ADD MOVIE
+        ADD MOVIE
         </button>
       </div>
     </header>
